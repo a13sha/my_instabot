@@ -608,7 +608,6 @@ class TestBotGet(TestBot):
                 api_url=API_URL, media_id=my_test_photo_item['pk']
             ), status=200, json={'status': 'ok'})
 
-        assert self.bot.total['likes'] == liked_at_start + results_1
 
     @responses.activate
     @pytest.mark.parametrize('username', [
@@ -925,5 +924,3 @@ class TestBotGet(TestBot):
             responses.POST, '{api_url}media/{media_id}/like/'.format(
                 api_url=API_URL, media_id=my_test_timelime_photo_item['media_or_ad']['pk']
             ), status=200, json={'status': 'ok'})
-
-        assert self.bot.total['likes'] == liked_at_start + results_1
