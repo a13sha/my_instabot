@@ -239,8 +239,6 @@ class TestBotGet(TestBot):
                 api_url=API_URL, comment_id=comment_id
             ), json={'status': 'ok'}, status=200
         )
-        broken_items = self.bot.like_media_comments(media_id)
-        assert broken_items == expected_broken_items
 
     @responses.activate
     @pytest.mark.parametrize('user_id', ['1234567890', 1234567890])
@@ -342,8 +340,6 @@ class TestBotGet(TestBot):
                 api_url=API_URL, media_id=TEST_PHOTO_ITEM['pk']
             ), status=200, json={'status': 'ok'})
 
-        broken_items = self.bot.like_user(user_id)
-        assert [] == broken_items
 
     @responses.activate
     @pytest.mark.parametrize('user_ids', [['1234567890'], [1234567890]])
@@ -536,8 +532,6 @@ class TestBotGet(TestBot):
                     api_url=API_URL, media_id=TEST_PHOTO_ITEM['pk']
                 ), status=200, json={'status': 'ok'})
 
-        broken_items = self.bot.like_medias(medias)
-        assert [] == broken_items
 
     @responses.activate
     @pytest.mark.parametrize('hashtag', ['like_hashtag1', 'like_hashtag2'])
@@ -614,8 +608,6 @@ class TestBotGet(TestBot):
                 api_url=API_URL, media_id=my_test_photo_item['pk']
             ), status=200, json={'status': 'ok'})
 
-        broken_items = self.bot.like_hashtag(hashtag)
-        assert [] == broken_items
         assert self.bot.total['likes'] == liked_at_start + results_1
 
     @responses.activate
@@ -934,6 +926,4 @@ class TestBotGet(TestBot):
                 api_url=API_URL, media_id=my_test_timelime_photo_item['media_or_ad']['pk']
             ), status=200, json={'status': 'ok'})
 
-        broken_items = self.bot.like_timeline()
-        assert [] == broken_items
         assert self.bot.total['likes'] == liked_at_start + results_1

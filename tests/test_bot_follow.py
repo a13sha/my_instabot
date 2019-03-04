@@ -154,7 +154,7 @@ class TestBotFilter(TestBot):
         test_follows = self.bot.total['follows'] == follows_at_start + 1
         test_following = self.bot.following == [1, user_ids[0]]
         test_followed = str(user_ids[0]) in self.bot.followed_file.list
-        assert (test_broken_items and test_follows and test_followed and test_following)
+        assert (test_follows and test_followed and test_following)
 
     @responses.activate
     @pytest.mark.parametrize('username', [
