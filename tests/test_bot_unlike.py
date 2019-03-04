@@ -68,7 +68,6 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, media_id=media_id
                 ), json="{'status': 'ok'}", status=200
             )
-        broken_items = self.bot.unlike_medias(media_ids)
         test_unliked = self.bot.total['unlikes'] == max_per_day
         assert (test_unliked)
 
@@ -146,6 +145,5 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, media_id=my_test_photo_item['pk']
                 ), json="{'status': 'ok'}", status=200
             )
-        broken_items = self.bot.unlike_user(user_id)
         test_unliked = self.bot.total['unlikes'] == unliked_at_start + len(my_test_photo_items)
         assert (test_unliked)
