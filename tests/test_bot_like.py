@@ -214,7 +214,6 @@ class TestBotGet(TestBot):
         results = 2
         if comment_id or has_liked_comment:
             comment_id = TEST_COMMENT_ITEM['pk']
-            expected_broken_items = []
         else:
             comment_id = 'wrong_comment_id'
         response_data = {
