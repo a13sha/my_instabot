@@ -68,10 +68,9 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, media_id=media_id
                 ), json="{'status': 'ok'}", status=200
             )
-        broken_items = self.bot.unlike_medias(media_ids)
+        test_unlike_meds = 1 == self.bot.unlike_medias(media_ids)
         test_unliked = self.bot.total['unlikes'] == max_per_day
-        test_broken = len(broken_items) == len(media_ids) - (max_per_day - total)
-        assert (test_unliked and test_broken)
+        assert (test_unlike_meds and test_unliked)
 
     @responses.activate
     @patch('time.sleep', return_value=None)
@@ -107,8 +106,6 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, comment_id=my_test_comment_item['pk']
                 ), json="{'status': 'ok'}", status=200
             )
-        broken_items = self.bot.unlike_media_comments(media_id)
-        assert broken_items == []
 
     @responses.activate
     @patch('time.sleep', return_value=None)
@@ -149,7 +146,6 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, media_id=my_test_photo_item['pk']
                 ), json="{'status': 'ok'}", status=200
             )
-        broken_items = self.bot.unlike_user(user_id)
+        test_unlike_usr = 1 == self.bot.unlike_user(user_id)
         test_unliked = self.bot.total['unlikes'] == unliked_at_start + len(my_test_photo_items)
-        test_broken = broken_items == []
-        assert (test_broken and test_unliked)
+        assert (test_unlike_usr and test_unliked)

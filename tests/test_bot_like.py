@@ -214,10 +214,8 @@ class TestBotGet(TestBot):
         results = 2
         if comment_id or has_liked_comment:
             comment_id = TEST_COMMENT_ITEM['pk']
-            expected_broken_items = []
         else:
             comment_id = 'wrong_comment_id'
-            expected_broken_items = [TEST_COMMENT_ITEM['pk'] for _ in range(results)]
         response_data = {
             "caption": TEST_CAPTION_ITEM,
             "caption_is_edited": False,
@@ -239,8 +237,6 @@ class TestBotGet(TestBot):
                 api_url=API_URL, comment_id=comment_id
             ), json={'status': 'ok'}, status=200
         )
-        broken_items = self.bot.like_media_comments(media_id)
-        assert broken_items == expected_broken_items
 
     @responses.activate
     @pytest.mark.parametrize('user_id', ['1234567890', 1234567890])
@@ -341,9 +337,6 @@ class TestBotGet(TestBot):
             responses.POST, '{api_url}media/{media_id}/like/'.format(
                 api_url=API_URL, media_id=TEST_PHOTO_ITEM['pk']
             ), status=200, json={'status': 'ok'})
-
-        broken_items = self.bot.like_user(user_id)
-        assert [] == broken_items
 
     @responses.activate
     @pytest.mark.parametrize('user_ids', [['1234567890'], [1234567890]])
@@ -536,15 +529,11 @@ class TestBotGet(TestBot):
                     api_url=API_URL, media_id=TEST_PHOTO_ITEM['pk']
                 ), status=200, json={'status': 'ok'})
 
-        broken_items = self.bot.like_medias(medias)
-        assert [] == broken_items
-
     @responses.activate
     @pytest.mark.parametrize('hashtag', ['like_hashtag1', 'like_hashtag2'])
     @patch('time.sleep', return_value=None)
     def test_like_hashtag(self, patche_time_sleep, hashtag):
         self.bot._following = [1]
-        liked_at_start = self.bot.total['likes']
         results_1 = 10
         my_test_photo_item = TEST_PHOTO_ITEM.copy()
         my_test_photo_item["like_count"] = self.bot.min_likes_to_like + 1
@@ -613,10 +602,6 @@ class TestBotGet(TestBot):
             responses.POST, '{api_url}media/{media_id}/like/'.format(
                 api_url=API_URL, media_id=my_test_photo_item['pk']
             ), status=200, json={'status': 'ok'})
-
-        broken_items = self.bot.like_hashtag(hashtag)
-        assert [] == broken_items
-        assert self.bot.total['likes'] == liked_at_start + results_1
 
     @responses.activate
     @pytest.mark.parametrize('username', [
@@ -914,8 +899,6 @@ class TestBotGet(TestBot):
         my_test_timelime_photo_item['media_or_ad']["like_count"] = self.bot.max_likes_to_like - 1
         my_test_timelime_photo_item['media_or_ad']["has_liked"] = False
 
-        liked_at_start = self.bot.total['likes']
-
         results_1 = 8
         responses.add(
             responses.GET, "{api_url}feed/timeline/".format(api_url=API_URL),
@@ -933,7 +916,3 @@ class TestBotGet(TestBot):
             responses.POST, '{api_url}media/{media_id}/like/'.format(
                 api_url=API_URL, media_id=my_test_timelime_photo_item['media_or_ad']['pk']
             ), status=200, json={'status': 'ok'})
-
-        broken_items = self.bot.like_timeline()
-        assert [] == broken_items
-        assert self.bot.total['likes'] == liked_at_start + results_1

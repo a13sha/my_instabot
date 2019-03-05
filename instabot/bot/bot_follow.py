@@ -1,5 +1,3 @@
-import time
-
 from tqdm import tqdm
 
 
@@ -51,7 +49,7 @@ def follow_users(self, user_ids):
             self.error_delay()
 
     self.logger.info("DONE: Now following {} users in total.".format(self.total['follows']))
-    return
+    return 1
 
 
 def follow_followers(self, user_id, nfollows=None):

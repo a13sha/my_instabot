@@ -38,7 +38,7 @@ def unlike_media_comments(self, media_id):
             self.error_delay()
     self.logger.info("DONE: Unliked {count} comments.".format(
         count=len(comment_ids) - inx))
-    return
+    return 1
 
 
 def unlike_medias(self, medias):
@@ -50,7 +50,7 @@ def unlike_medias(self, medias):
             self.logger.error(str(e))
             self.error_delay()
     self.logger.info("DONE: Total unliked %d medias." % self.total['unlikes'])
-    return
+    return 1
 
 
 def unlike_user(self, user_id):
