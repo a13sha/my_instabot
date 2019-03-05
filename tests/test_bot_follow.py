@@ -150,7 +150,7 @@ class TestBotFilter(TestBot):
                     api_url=API_URL, user_id=user_id
                 ), json=response_data, status=200)
 
-        test_follow_usrs = self.bot.follow_users(user_ids)
+        test_follow_usrs = True == self.bot.follow_users(user_ids)
         test_follows = self.bot.total['follows'] == follows_at_start + 1
         test_following = self.bot.following == [1, user_ids[0]]
         test_followed = str(user_ids[0]) in self.bot.followed_file.list
