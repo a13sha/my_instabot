@@ -22,13 +22,13 @@ bot = Bot()
 bot.login(username=args.u, password=args.p,
           proxy=args.proxy)
 
-print(bot.api.getv2Inbox())
-data = bot.last_json['inbox']['threads']
-for item in data:
-    print(item['inviter']['username'])
-    last_item = item['last_permanent_item']
-    item_type = last_item['item_type']
-    if item_type == 'text':
-        print(last_item['text'])
-    else:
-        print(item_type)
+if bot.api.getv2Inbox():
+    data = bot.last_json['inbox']['threads']
+    for item in data:
+        bot.console_print(item['inviter']['username'], 'lightgreen')
+        last_item = item['last_permanent_item']
+        item_type = last_item['item_type']
+        if item_type == 'text':
+            print(last_item['text'])
+        else:
+            print(item_type)
