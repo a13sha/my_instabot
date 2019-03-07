@@ -25,7 +25,7 @@ bot.login(username=args.u, password=args.p,
 if bot.api.getv2Inbox():
     data = bot.last_json['inbox']['threads']
     for item in data:
-        print(item['inviter']['username'])
+        bot.console_print(item['inviter']['username'], 'lightgreen')
         last_item = item['last_permanent_item']
         item_type = last_item['item_type']
         if item_type == 'text':
